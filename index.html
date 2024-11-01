@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册信息</title>
+    <style>
+        @font-face {
+            font-family: 'icomoon';
+            src: url('fonts/icomoon.eot?hembjw');
+            src: url('fonts/icomoon.eot?hembjw#iefix') format('embedded-opentype'),
+                url('fonts/icomoon.ttf?hembjw') format('truetype'),
+                url('fonts/icomoon.woff?hembjw') format('woff'),
+                url('fonts/icomoon.svg?hembjw#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+
+        body {
+            font-family: 'micro yahei';
+            margin: auto;
+            background: url(./images/bgi.webp) no-repeat;
+            background-size: 100% auto;
+        }
+
+        a {
+            color: rgb(50, 160, 110);
+            text-decoration: none;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        .title {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            margin: 0 auto;
+            width: 600px;
+            padding: 20px 20px;
+            font-size: 14px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgb(0, 0, 0, .1);
+            color: #999;
+            background-color: #fff;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        ul li {
+            position: relative;
+            margin: 30px;
+            width: 100%;
+            height: 40px;
+        }
+
+        /* 查看密码的小眼睛 */
+        ul li .testPassword {
+            position: absolute;
+            font-family: 'icomoon';
+            color: #999;
+            top: 45%;
+            left: 200px;
+            transform: translateY(-50%);
+        }
+
+        /* 单选按钮与文字之间无太大间隔 */
+        ul li [name='sex'] {
+            margin-right: 0px;
+        }
+
+        /* 未选择性别的提示 */
+        ul li .unselectSex {
+            display: none;
+            font-family: 'icomoon';
+            color: red;
+        }
+
+        ul li:nth-child(4) {
+            line-height: 40px;
+            margin: -25px 30px;
+        }
+
+        ul li:nth-child(6) {
+            margin-top: 20px;
+        }
+
+        ul li .mobile {
+            position: absolute;
+            top: 8px;
+            left: 15px;
+            font-size: 14px;
+            color: #999;
+            background-color: #fff;
+            transition: all .4s;
+        }
+
+        ul li .input {
+            width: 210px;
+            height: 35px;
+            border: 1px solid #999;
+            border-radius: 10px;
+            padding-left: 18px;
+            margin-right: 12px;
+            outline: none;
+        }
+
+        .green {
+            color: rgb(50, 160, 110);
+        }
+
+        /* 输入框的补充说明 */
+        ul li .explanation,
+        ul li .codeExplanation {
+            font-size: 12px;
+            padding-left: 12px;
+        }
+
+        ul li .codeExplanation {
+            display: none;
+        }
+
+        ul li .submit {
+            position: absolute;
+            left: 50%;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: 1px solid #007BFF;
+            border-radius: 4px;
+            cursor: pointer;
+            transform: translateX(-50%);
+        }
+
+        ul li:nth-child(8) {
+            margin: 0;
+        }
+
+        .submit:hover {
+            background-color: #0056b3;
+        }
+
+        ul li .inputFocus {
+            outline: none;
+            border: 1px solid rgb(50, 160, 110);
+        }
+
+        ul li .textFocus {
+            color: rgb(50, 160, 110);
+            top: -10px;
+        }
+
+        ul li .inputBlur {
+            border: 1px solid #999;
+        }
+
+        ul li .textBlur {
+            color: #999;
+            top: -10px;
+        }
+
+        ul li .codeGenerate {
+            margin-left: -98px;
+            padding-right: 25px;
+        }
+
+        /* 输入格式错误说明 */
+        ul li [class^=wrong] {
+            display: none;
+            font-family: 'icomoon';
+            color: red;
+        }
+
+        /* 输入正确的提示说明 */
+        ul li [class^=correct] {
+            display: none;
+            font-family: 'icomoon';
+            color: rgb(50, 160, 110);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <h1 class="title">注册信息</h1>
+        <form id="registrationForm">
+            <ul>
+                <li>
+                    <span class="mobile" id="accountLabel">账户</span>
+                    <input id="account" type="text" class="input" onfocus="updateInput('account')"
+                        onblur="restoreInput('account'),test('account')">
+                    <span class="correctAccount"></span>
+                    <span class="wrongAccount">请输入正确的用户名格式</span><br>
+                    <span class="explanation">用户名由字母数字下划线组成，且长度为6-16位</span>
+                </li>
+                <li>
+                    <span class="mobile" id="passwordLabel">密码</span>
+                    <input id="password" type="password" class="input" onfocus="updateInput('password')"
+                        onblur="restoreInput('password'),test('password')">
+                    <a class="testPassword" href="#"></a>
+                    <span class="correctPassword"></span>
+                    <span class="wrongPassword">请输入正确的密码格式</span><br>
+                    <span class="explanation">密码应至少包含大写字母、小写字母、数字、下划线，且长度为8-16位</span>
+                </li>
+                <li>
+                    <span class="mobile" id="repeatPWLabel">再次输入密码</span>
+                    <input id="repeatPW" type="password" class="input" onfocus="updateInput('repeatPW')"
+                        onblur="restoreInput('repeatPW'),test('repeatPW')">
+                    <a class="testPassword" href="#"></a>
+                    <span class="correctRepeatPW"></span>
+                    <span class="wrongRepeatPW">两次密码不一致</span>
+                </li>
+                <li>
+                    性别：
+                    <input type="radio" name="sex" id="male" value="male" onchange="updateSex()">
+                    <label for="male">男</label>
+                    <input type="radio" name="sex" id="female" value="female" onchange="updateSex()">
+                    <label for="female">女</label>
+                    <span class="unselectSex">请选择性别</span>
+                </li>
+                <li>
+                    <span class="mobile" id="phoneNumberLabel">手机号码</span>
+                    <input id="phoneNumber" type="text" class="input" onfocus="updateInput('phoneNumber')"
+                        onblur="restoreInput('phoneNumber'),test('phoneNumber')">
+                    <span class="wrongPhoneNumber">请输入正确的手机号</span>
+                </li>
+                <li>
+                    <span class="mobile" id="authCodeLabel" class="">验证码</span>
+                    <input id="authCode" type="text" class="input" onfocus="updateInput('authCode')"
+                        onblur="restoreInput('authCode'),test('authCode')">
+                    <span class="codeGenerate"><a href="#">获取验证码</a></span>
+                    <span class="wrongAuthCode">验证码错误</span><br>
+                    <span class="codeExplanation">123456</span>
+                </li>
+                <li>
+                    <input type="checkbox" id="agree" onchange="toggleAgree()">同意并遵守<a
+                        href="https://www.baidu.com">《用户使用协议》</a>
+                    <span class="wrongAgree">请先同意用户使用协议</span>
+                </li>
+                <li>
+                    <button class="submit" type="submit" onclick="submitForm(event)">提交</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <script>
+        //用户信息
+        const userInfo = {
+            account: '',
+            password: '',
+            repeatPW: '',
+            phoneNumber: '',
+            authCode: '',
+            sex: '',
+            agree: false
+        };
+        //点击输入框标签获得焦点
+        const mobile = document.querySelectorAll('.mobile')
+        for (let i = 0; i < mobile.length; i++) {
+            mobile[i].addEventListener('click', () => {
+                mobile[i].nextElementSibling.focus()
+            })
+        }
+        //获得焦点更新输入框样式
+        function updateInput(field) {
+            document.getElementById(field).classList.remove('inputBlur');
+            document.getElementById(field).classList.add('inputFocus');
+            document.getElementById(field + 'Label').classList.remove('textBlur');
+            document.getElementById(field + 'Label').classList.add('textFocus');
+        }
+        //恢复输入框样式
+        function restoreInput(field) {
+            document.getElementById(field).classList.remove('inputFocus');
+            document.getElementById(field).classList.add('inputBlur');
+            document.getElementById(field + 'Label').classList.remove('textFocus');
+            document.getElementById(field + 'Label').classList.add('textBlur');
+            userInfo[field] = document.getElementById(field).value;
+
+        }
+        //点击小眼睛，查看密码
+        const eyes = document.querySelectorAll('.testPassword')
+        for (let i = 0; i < eyes.length; i++) {
+            eyes[i].addEventListener('click', function (e) {
+                e.preventDefault()
+                this.previousElementSibling.type = this.previousElementSibling.type === 'password' ? 'text' : 'password'
+                this.innerText = this.innerText === '' ? '' : ''
+            })
+        }
+        //更新性别信息
+        function updateSex() {
+            const male = document.getElementById('male').checked;
+            const female = document.getElementById('female').checked;
+            userInfo.sex = male ? 'male' : female ? 'female' : '';
+            document.querySelector('.unselectSex').style.display = 'none'
+        }
+        //点击获取验证码后，弹出验证码
+        const cg = document.querySelector('.codeGenerate')
+        cg.addEventListener('click', (e) => {
+            e.preventDefault()
+            document.querySelector('.codeExplanation').style.display = 'block'
+        })
+
+        //更新同意框信息
+        function toggleAgree() {
+            userInfo.agree = document.getElementById('agree').checked;
+            if (document.getElementById('agree').checked) {
+                document.querySelector('.wrongAgree').style.display = 'none'
+
+            }
+        }
+
+        const account = document.querySelector('.correctAccount')
+        const Password = document.querySelector('.correctPassword')
+        const repeatPW = document.querySelector('.correctRepeatPW')
+        const phoneNumber = document.querySelector('.wrongPhoneNumber')
+        const authCode = document.querySelector('.wrongAuthCode')
+
+        const accountTest = /^[0-9a-zA-Z]{6,16}$/
+        const passwordTest = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*_)[0-9a-zA-Z_]{8,16}$/
+        const phoneNumberTest = /^1[0-9]{10}$/
+        //检测对应输入框是否符合格式要求
+        function test(value) {
+            if (value === 'account') {
+                if (accountTest.test(userInfo.account)) {
+                    account.style.display = 'inline-block'
+                    account.nextElementSibling.style.display = 'none'
+                } else {
+                    account.style.display = 'none'
+                    account.nextElementSibling.style.display = 'inline-block'
+                }
+            } else if (value === 'password') {
+                if (passwordTest.test(userInfo.password)) {
+                    Password.style.display = 'inline-block'
+                    Password.nextElementSibling.style.display = 'none'
+                } else {
+                    Password.style.display = 'none'
+                    Password.nextElementSibling.style.display = 'inline-block'
+                }
+            } else if (value === 'repeatPW') {
+                if (userInfo.password === userInfo.repeatPW) {
+                    repeatPW.style.display = 'inline-block'
+                    repeatPW.nextElementSibling.style.display = 'none'
+                } else {
+                    repeatPW.style.display = 'none'
+                    repeatPW.nextElementSibling.style.display = 'inline-block'
+                }
+            } else if (value === 'phoneNumber') {
+                if (phoneNumberTest.test(userInfo.phoneNumber)) {
+                    phoneNumber.style.display = 'none'
+                } else {
+                    phoneNumber.style.display = 'inline-block'
+                }
+            } else if (value === 'authCode') {
+                if (userInfo.authCode === '123456') {
+                    authCode.style.display = 'none'
+                } else {
+                    authCode.style.display = 'inline-block'
+                }
+            }
+        }
+        //阻止默认提交事件，并且检测所有输入框信息是否正确
+        function submitForm(event) {
+            event.preventDefault();
+            test('account')
+            test('password')
+            test('repeatPW')
+            if (!(document.getElementById('male').checked || document.getElementById('female').checked)) {
+                document.querySelector('.unselectSex').style.display = 'inline-block'
+            }
+
+            test('phoneNumber')
+            test('authCode')
+
+            if (!userInfo.agree) {
+                document.querySelector('.wrongAgree').style.display = 'inline-block'
+            }
+            if (accountTest.test(userInfo.account) &&
+                passwordTest.test(userInfo.password) &&
+                userInfo.password === userInfo.repeatPW &&
+                (document.getElementById('male').checked || document.getElementById('female').checked) &&
+                phoneNumberTest.test(userInfo.phoneNumber) &&
+                userInfo.authCode === '123456' &&
+                userInfo.agree) {
+                alert('注册成功')
+                document.querySelector('#registrationForm').reset()
+            }
+        }
+    </script>
+</body>
+
+</html>

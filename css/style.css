@@ -1,0 +1,39 @@
+/* 字体图标 */
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?hembjw');
+    src: url('../fonts/icomoon.eot?hembjw#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon.ttf?hembjw') format('truetype'),
+        url('../fonts/icomoon.woff?hembjw') format('woff'),
+        url('../fonts/icomoon.svg?hembjw#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.da {
+    width: 400px;
+    height: 10px;
+    outline: none;
+    border: 1px solid red;
+    border-radius: 10px;
+    padding: 1px;
+}
+
+.search {
+    width: 0%;
+    height: 100%;
+    outline: none;
+    border-radius: 20px;
+    background-color: rgb(245, 126, 56);
+    transition: all .3s;
+}
+
+.search:hover {
+    width: 100%;
+}
+
+.ico::before {
+    content: '\e900';
+    font-family: 'icomoon';
+}
