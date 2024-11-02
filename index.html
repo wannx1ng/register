@@ -239,6 +239,7 @@
                     <input id="authCode" type="text" class="input" onfocus="updateInput('authCode')"
                         onblur="restoreInput('authCode'),test('authCode')">
                     <span class="codeGenerate"><a href="#">获取验证码</a></span>
+
                     <span class="wrongAuthCode">验证码错误</span><br>
                     <span class="codeExplanation">123456</span>
                 </li>
@@ -255,6 +256,15 @@
     </div>
 
     <script>
+        const account = document.querySelector('.correctAccount')
+        const Password = document.querySelector('.correctPassword')
+        const repeatPW = document.querySelector('.correctRepeatPW')
+        const phoneNumber = document.querySelector('.wrongPhoneNumber')
+        const authCode = document.querySelector('.wrongAuthCode')
+
+        const accountTest = /^[0-9a-zA-Z]{6,16}$/
+        const passwordTest = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*_)[0-9a-zA-Z_]{8,16}$/
+        const phoneNumberTest = /^1[0-9]{10}$/
         //用户信息
         const userInfo = {
             account: '',
@@ -308,7 +318,9 @@
         const cg = document.querySelector('.codeGenerate')
         cg.addEventListener('click', (e) => {
             e.preventDefault()
-            document.querySelector('.codeExplanation').style.display = 'block'
+            if (phoneNumberTest.test(userInfo.phoneNumber)) {
+                document.querySelector('.codeExplanation').style.display = 'block'
+            }
         })
 
         //更新同意框信息
@@ -320,15 +332,6 @@
             }
         }
 
-        const account = document.querySelector('.correctAccount')
-        const Password = document.querySelector('.correctPassword')
-        const repeatPW = document.querySelector('.correctRepeatPW')
-        const phoneNumber = document.querySelector('.wrongPhoneNumber')
-        const authCode = document.querySelector('.wrongAuthCode')
-
-        const accountTest = /^[0-9a-zA-Z]{6,16}$/
-        const passwordTest = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*_)[0-9a-zA-Z_]{8,16}$/
-        const phoneNumberTest = /^1[0-9]{10}$/
         //检测对应输入框是否符合格式要求
         function test(value) {
             if (value === 'account') {
